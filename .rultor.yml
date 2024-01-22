@@ -1,0 +1,15 @@
+assets:
+  settings.xml: ilyalisov/secrets#assets/settings.xml
+  secring.gpg: ilyalisov/secrets#assets/secring.gpg
+  pubring.gpg: ilyalisov/secrets#assets/pubring.gpg
+docker:
+  image: l3r8y/rultor-image:1.0.3
+release:
+  pre: false
+  sensetive:
+    - settings.xml
+  script: |-
+    [[ "${tag}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit -1
+    mvn versions:set "-DnewVersion=${tag}"
+    git commit -am "${tag}"
+    mvn clean deploy -P release --errors --settings ../settings.xml
