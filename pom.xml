@@ -42,7 +42,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lombok.version>1.18.30</lombok.version>
         <checkstyle.version>3.2.2</checkstyle.version>
+        <junit.version>5.10.1</junit.version>
         <jacoco.version>0.8.11</jacoco.version>
+        <firebase-admin.version>9.2.0</firebase-admin.version>
+        <firebase-storage.version>20.3.0</firebase-storage.version>
+        <google-cloud.version>2.31.0</google-cloud.version>
     </properties>
     <dependencies>
         <dependency>
@@ -50,6 +54,22 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
             <version>${lombok.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.firebase</groupId>
+            <artifactId>firebase-admin</artifactId>
+            <version>${firebase-admin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.cloud</groupId>
+            <artifactId>google-cloud-storage</artifactId>
+            <version>${google-cloud.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>
