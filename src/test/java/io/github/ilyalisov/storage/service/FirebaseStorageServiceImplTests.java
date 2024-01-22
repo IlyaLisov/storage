@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -143,7 +144,10 @@ public class FirebaseStorageServiceImplTests {
         try (InputStream serviceAccount = classLoader.getResourceAsStream(
                 "file1.txt"
         )) {
-            Path path = Path.of("folder", "nestedFolder");
+            Path path = Path.of(
+                    "folder",
+                    UUID.randomUUID().toString()
+            );
             byte[] bytes = serviceAccount.readAllBytes();
             StorageFile file = new StorageFile(
                     "file1.txt",
@@ -176,7 +180,10 @@ public class FirebaseStorageServiceImplTests {
         try (InputStream serviceAccount = classLoader.getResourceAsStream(
                 "file1.txt"
         )) {
-            Path path = Path.of("folder", "nestedFolder");
+            Path path = Path.of(
+                    "folder",
+                    UUID.randomUUID().toString()
+            );
             StorageFile file = new StorageFile(
                     "file1.txt",
                     path,
@@ -201,7 +208,10 @@ public class FirebaseStorageServiceImplTests {
              InputStream serviceAccount2 = classLoader.getResourceAsStream(
                      "file2.txt"
              )) {
-            Path path = Path.of("folder", "nestedFolder");
+            Path path = Path.of(
+                    "folder",
+                    UUID.randomUUID().toString()
+            );
             StorageFile file1 = new StorageFile(
                     "file1.txt",
                     path,
@@ -224,7 +234,7 @@ public class FirebaseStorageServiceImplTests {
     @Test
     @SneakyThrows
     void findAllInNotExistingPath() {
-        Path path = Path.of("folder", "nestedFolder");
+        Path path = Path.of("folder", UUID.randomUUID().toString());
         List<StorageFile> files = storageService.findAll(path);
         assertEquals(0, files.size());
     }
@@ -252,7 +262,10 @@ public class FirebaseStorageServiceImplTests {
         try (InputStream serviceAccount = classLoader.getResourceAsStream(
                 "file1.txt"
         )) {
-            Path path = Path.of("folder", "nestedFolder");
+            Path path = Path.of(
+                    "folder",
+                    UUID.randomUUID().toString()
+            );
             StorageFile file = new StorageFile(
                     "file1.txt",
                     path,
@@ -314,7 +327,10 @@ public class FirebaseStorageServiceImplTests {
         try (InputStream serviceAccount = classLoader.getResourceAsStream(
                 "file1.txt"
         )) {
-            Path path = Path.of("folder", "nestedFolder");
+            Path path = Path.of(
+                    "folder",
+                    UUID.randomUUID().toString()
+            );
             StorageFile file = new StorageFile(
                     "file1.txt",
                     path,
@@ -340,7 +356,10 @@ public class FirebaseStorageServiceImplTests {
         try (InputStream serviceAccount = classLoader.getResourceAsStream(
                 "file1.txt"
         )) {
-            Path path = Path.of("folder", "nestedFolder");
+            Path path = Path.of(
+                    "folder",
+                    UUID.randomUUID().toString()
+            );
             StorageFile file = new StorageFile(
                     "file1.txt",
                     path,
@@ -366,7 +385,10 @@ public class FirebaseStorageServiceImplTests {
         try (InputStream serviceAccount = classLoader.getResourceAsStream(
                 "file1.txt"
         )) {
-            Path path = Path.of("folder", "nestedFolder");
+            Path path = Path.of(
+                    "folder",
+                    UUID.randomUUID().toString()
+            );
             StorageFile file = new StorageFile(
                     "file1.txt",
                     path,
@@ -388,7 +410,7 @@ public class FirebaseStorageServiceImplTests {
     @Test
     @SneakyThrows
     void deleteNotExistingFolder() {
-        Path path = Path.of("folder", "nestedFolder");
+        Path path = Path.of("folder", UUID.randomUUID().toString());
         storageService.delete(
                 path
         );
