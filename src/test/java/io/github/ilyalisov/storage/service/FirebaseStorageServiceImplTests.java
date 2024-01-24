@@ -226,7 +226,13 @@ public class FirebaseStorageServiceImplTests {
                     serviceAccount2
             );
             storageService.save(file2);
-            List<StorageFile> files = storageService.findAll(path);
+            List<StorageFile> files = storageService.findAll(
+                    path,
+                    new io.github.ilyalisov.storage.config.Page(
+                            1,
+                            10
+                    )
+            );
             assertEquals(2, files.size());
         }
     }
@@ -235,7 +241,12 @@ public class FirebaseStorageServiceImplTests {
     @SneakyThrows
     void findAllInNotExistingPath() {
         Path path = Path.of("folder", UUID.randomUUID().toString());
-        List<StorageFile> files = storageService.findAll(path);
+        List<StorageFile> files = storageService.findAll(
+                path,
+                new io.github.ilyalisov.storage.config.Page(
+                        1,
+                        10
+                ));
         assertEquals(0, files.size());
     }
 

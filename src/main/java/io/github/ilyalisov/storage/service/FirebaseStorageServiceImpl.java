@@ -4,6 +4,7 @@ import com.google.api.gax.paging.Page;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Bucket;
+import com.google.cloud.storage.Storage;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.StorageClient;
@@ -13,9 +14,9 @@ import lombok.SneakyThrows;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Implementation of StorageService based on Firebase.
@@ -95,20 +96,28 @@ public class FirebaseStorageServiceImpl implements StorageService {
 
     @Override
     public List<StorageFile> findAll(
-            final Path path
+            final Path path,
+            final io.github.ilyalisov.storage.config.Page page
     ) {
-        Page<Blob> results = bucket.list();
-        List<StorageFile> files = new ArrayList<>();
-        results.streamAll().forEach(
-                (result) -> {
-                    if (result.getName().startsWith(path + "/")) {
-                        StorageFile file = find(result.getName())
-                                .get();
-                        files.add(file);
-                    }
-                }
+        Page<Blob> results = bucket.list(
+                Storage.BlobListOption.prefix(path.toString() + "/")
         );
-        return files;
+        List<Blob> pageBlobs = results.streamAll()
+                .toList();
+        List<Blob> blobs = pageBlobs
+                .subList(
+                        page.offset(),
+                        Math.min(
+                                page.offset() + page.getPageSize(),
+                                pageBlobs.size()
+                        )
+                );
+        return blobs.stream()
+                .map(
+                        (result) -> find(result.getName())
+                                .get()
+                )
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -165,13 +174,10 @@ public class FirebaseStorageServiceImpl implements StorageService {
     public void delete(
             final Path path
     ) {
-        Page<Blob> blobs = bucket.list();
-        String pathToString = path.toString();
-        blobs.streamAll().forEach(blob -> {
-            if (blob.getName().startsWith(pathToString)) {
-                blob.delete();
-            }
-        });
+        Page<Blob> blobs = bucket.list(
+                Storage.BlobListOption.prefix(path + "/")
+        );
+        blobs.streamAll().forEach(Blob::delete);
     }
 
 }

@@ -1,5 +1,6 @@
 package io.github.ilyalisov.storage.service;
 
+import io.github.ilyalisov.storage.config.Page;
 import io.github.ilyalisov.storage.config.StorageFile;
 import io.minio.BucketExistsArgs;
 import io.minio.GetObjectArgs;
@@ -141,9 +142,9 @@ public class MinIOStorageServiceImpl implements StorageService {
     @Override
     @SneakyThrows
     public List<StorageFile> findAll(
-            final Path path
+            final Path path,
+            final Page page
     ) {
-        List<StorageFile> result = new ArrayList<>();
         Iterable<Result<Item>> response = client.listObjects(
                 ListObjectsArgs.builder()
                         .bucket(bucket)
@@ -151,22 +152,38 @@ public class MinIOStorageServiceImpl implements StorageService {
                         .recursive(true)
                         .build()
         );
-        for (Result<Item> item : response) {
+        List<Item> items = new ArrayList<>();
+        response.forEach(itemResult -> {
+            try {
+                items.add(itemResult.get());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        List<Item> pageItem = items.subList(
+                page.offset(),
+                Math.min(
+                        page.offset() + page.getPageSize(),
+                        items.size()
+                )
+        );
+        List<StorageFile> result = new ArrayList<>();
+        for (Item item : pageItem) {
             InputStream objectStream = client.getObject(
                     GetObjectArgs.builder()
                             .bucket(bucket)
-                            .object(item.get().objectName())
+                            .object(item.objectName())
                             .build()
             );
             String contentType = client.statObject(
                             StatObjectArgs.builder()
                                     .bucket(bucket)
-                                    .object(item.get().objectName())
+                                    .object(item.objectName())
                                     .build()
                     )
                     .contentType();
             StorageFile storageFile = new StorageFile(
-                    item.get().objectName(),
+                    item.objectName(),
                     path,
                     contentType,
                     objectStream
