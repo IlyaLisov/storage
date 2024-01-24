@@ -1,6 +1,7 @@
 package io.github.ilyalisov.storage.service;
 
 
+import io.github.ilyalisov.storage.config.Page;
 import io.github.ilyalisov.storage.config.StorageFile;
 
 import java.nio.file.Path;
@@ -38,10 +39,12 @@ public interface StorageService {
      * Finds all files in folder.
      *
      * @param path path to folder
+     * @param page pagination of results
      * @return list of files
      */
     List<StorageFile> findAll(
-            Path path
+            Path path,
+            Page page
     );
 
     /**
