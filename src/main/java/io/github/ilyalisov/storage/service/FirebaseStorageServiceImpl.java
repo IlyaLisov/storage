@@ -115,7 +115,7 @@ public class FirebaseStorageServiceImpl implements StorageService {
         return blobs.stream()
                 .map(
                         (result) -> find(result.getName())
-                                .get()
+                                .orElseThrow()
                 )
                 .collect(Collectors.toList());
     }
