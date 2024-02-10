@@ -116,10 +116,8 @@
                             <goal>check</goal>
                         </goals>
                         <configuration>
-                            <suppressionsFileExpression>suppressions.xml
-                            </suppressionsFileExpression>
-                            <suppressionsLocation>suppressions.xml
-                            </suppressionsLocation>
+                            <suppressionsFileExpression>suppressions.xml</suppressionsFileExpression>
+                            <suppressionsLocation>suppressions.xml</suppressionsLocation>
                         </configuration>
                     </execution>
                 </executions>
