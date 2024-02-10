@@ -81,7 +81,7 @@ public class FirebaseStorageServiceImpl implements StorageService {
             final String fileName,
             final Path path
     ) {
-        Blob result = bucket.get(path.toString() + "/" + fileName);
+        Blob result = bucket.get(fileName(path, fileName));
         if (result == null) {
             return Optional.empty();
         }
@@ -132,7 +132,7 @@ public class FirebaseStorageServiceImpl implements StorageService {
             final String fileName,
             final Path path
     ) {
-        return bucket.get(path.toString() + "/" + fileName) != null;
+        return bucket.get(fileName(path, fileName)) != null;
     }
 
     @Override
@@ -140,13 +140,15 @@ public class FirebaseStorageServiceImpl implements StorageService {
     public Path save(
             final StorageFile file
     ) {
-        String path = file.getPath() != null ? file.getPath() + "/" : "";
         bucket.create(
-                path + file.getFileName(),
+                fileName(file.getPath(), file.getFileName()),
                 file.getInputStream().readAllBytes(),
                 file.getContentType()
         );
-        return Path.of(path, file.getFileName());
+        return Path.of(fileName(
+                file.getPath(),
+                file.getFileName()
+        ));
     }
 
     @Override
@@ -164,7 +166,7 @@ public class FirebaseStorageServiceImpl implements StorageService {
             final String fileName,
             final Path path
     ) {
-        Blob file = bucket.get(path.toString() + "/" + fileName);
+        Blob file = bucket.get(fileName(path, fileName));
         if (file != null) {
             file.delete();
         }
@@ -177,7 +179,8 @@ public class FirebaseStorageServiceImpl implements StorageService {
         Page<Blob> blobs = bucket.list(
                 Storage.BlobListOption.prefix(path + "/")
         );
-        blobs.streamAll().forEach(Blob::delete);
+        blobs.streamAll()
+                .forEach(Blob::delete);
     }
 
 }

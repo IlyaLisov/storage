@@ -108,4 +108,24 @@ public interface StorageService {
             Path path
     );
 
+    /**
+     * Creates file name from path and actual name.
+     *
+     * @param path     path to folder
+     * @param fileName name of file
+     * @return file name with path
+     */
+    default String fileName(
+            final Path path,
+            final String fileName
+    ) {
+        if (path == null) {
+            return fileName;
+        }
+        if (fileName == null) {
+            return path.toString();
+        }
+        return path + "/" + fileName;
+    }
+
 }

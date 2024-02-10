@@ -118,13 +118,13 @@ public class MinIOStorageServiceImpl implements StorageService {
         try (GetObjectResponse result = client.getObject(
                 GetObjectArgs.builder()
                         .bucket(bucket)
-                        .object(path.toString() + "/" + fileName)
+                        .object(fileName(path, fileName))
                         .build()
         )) {
             StatObjectResponse stat = client.statObject(
                     StatObjectArgs.builder()
                             .bucket(bucket)
-                            .object(path + "/" + fileName)
+                            .object(fileName(path, fileName))
                             .build()
             );
             StorageFile file = new StorageFile(
@@ -220,7 +220,7 @@ public class MinIOStorageServiceImpl implements StorageService {
             client.statObject(
                     StatObjectArgs.builder()
                             .bucket(bucket)
-                            .object(path.toString() + "/" + fileName)
+                            .object(fileName(path, fileName))
                             .build()
             );
             return true;
@@ -234,7 +234,6 @@ public class MinIOStorageServiceImpl implements StorageService {
     public Path save(
             final StorageFile file
     ) {
-        String path = file.getPath() != null ? file.getPath() + "/" : "";
         client.putObject(
                 PutObjectArgs.builder()
                         .bucket(bucket)
@@ -243,11 +242,11 @@ public class MinIOStorageServiceImpl implements StorageService {
                                 file.getInputStream().available(),
                                 -1
                         )
-                        .object(path + file.getFileName())
+                        .object(fileName(file.getPath(), file.getFileName()))
                         .contentType(file.getContentType())
                         .build()
         );
-        return Path.of(path, file.getFileName());
+        return Path.of(fileName(file.getPath(), file.getFileName()));
     }
 
     @Override
@@ -272,7 +271,7 @@ public class MinIOStorageServiceImpl implements StorageService {
         client.removeObject(
                 RemoveObjectArgs.builder()
                         .bucket(bucket)
-                        .object(path.toString() + "/" + fileName)
+                        .object(fileName(path, fileName))
                         .build()
         );
     }
