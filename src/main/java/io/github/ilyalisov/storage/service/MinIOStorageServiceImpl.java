@@ -115,28 +115,7 @@ public class MinIOStorageServiceImpl implements StorageService {
             final String fileName,
             final Path path
     ) {
-        try (GetObjectResponse result = client.getObject(
-                GetObjectArgs.builder()
-                        .bucket(bucket)
-                        .object(fileName(path, fileName))
-                        .build()
-        )) {
-            StatObjectResponse stat = client.statObject(
-                    StatObjectArgs.builder()
-                            .bucket(bucket)
-                            .object(fileName(path, fileName))
-                            .build()
-            );
-            StorageFile file = new StorageFile(
-                    fileName,
-                    path,
-                    stat.contentType(),
-                    new ByteArrayInputStream(result.readAllBytes())
-            );
-            return Optional.of(file);
-        } catch (Exception e) {
-            return Optional.empty();
-        }
+        return find(fileName(path, fileName));
     }
 
     @Override
@@ -216,17 +195,7 @@ public class MinIOStorageServiceImpl implements StorageService {
             final String fileName,
             final Path path
     ) {
-        try {
-            client.statObject(
-                    StatObjectArgs.builder()
-                            .bucket(bucket)
-                            .object(fileName(path, fileName))
-                            .build()
-            );
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+        return exists(fileName(path, fileName));
     }
 
     @Override
@@ -268,12 +237,7 @@ public class MinIOStorageServiceImpl implements StorageService {
             final String fileName,
             final Path path
     ) {
-        client.removeObject(
-                RemoveObjectArgs.builder()
-                        .bucket(bucket)
-                        .object(fileName(path, fileName))
-                        .build()
-        );
+        delete(fileName(path, fileName));
     }
 
     @Override
