@@ -81,17 +81,7 @@ public class FirebaseStorageServiceImpl implements StorageService {
             final String fileName,
             final Path path
     ) {
-        Blob result = bucket.get(fileName(path, fileName));
-        if (result == null) {
-            return Optional.empty();
-        }
-        StorageFile file = new StorageFile(
-                fileName,
-                path,
-                result.getContentType(),
-                new ByteArrayInputStream(result.getContent())
-        );
-        return Optional.of(file);
+        return find(fileName(path, fileName));
     }
 
     @Override
@@ -132,7 +122,7 @@ public class FirebaseStorageServiceImpl implements StorageService {
             final String fileName,
             final Path path
     ) {
-        return bucket.get(fileName(path, fileName)) != null;
+        return exists(fileName(path, fileName));
     }
 
     @Override
@@ -166,10 +156,7 @@ public class FirebaseStorageServiceImpl implements StorageService {
             final String fileName,
             final Path path
     ) {
-        Blob file = bucket.get(fileName(path, fileName));
-        if (file != null) {
-            file.delete();
-        }
+        delete(fileName(path, fileName));
     }
 
     @Override
