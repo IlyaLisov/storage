@@ -1,0 +1,27 @@
+name: maven-build
+on:
+  pull_request:
+    branches: [ "*" ]
+
+jobs:
+  maven:
+    runs-on: ubuntu-20.04
+    env:
+      FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
+      FIREBASE_BUCKET: ${{ secrets.FIREBASE_BUCKET }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+      - uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            maven-
+      - run: |
+          export FIREBASE_SECRET="${FIREBASE_SECRET}"
+          export FIREBASE_BUCKET="${FIREBASE_BUCKET}"
+          mvn clean install
