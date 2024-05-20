@@ -1,3 +1,5 @@
+architect:
+  - ilyalisov
 assets:
   settings.xml: ilyalisov/secrets#assets/settings.xml
   secring.gpg: ilyalisov/secrets#assets/secring.gpg
