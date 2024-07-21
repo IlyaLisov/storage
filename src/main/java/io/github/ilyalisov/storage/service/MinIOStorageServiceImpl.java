@@ -14,6 +14,7 @@ import io.minio.Result;
 import io.minio.StatObjectArgs;
 import io.minio.StatObjectResponse;
 import io.minio.messages.Item;
+import lombok.Getter;
 import lombok.SneakyThrows;
 
 import java.io.ByteArrayInputStream;
@@ -31,21 +32,13 @@ public class MinIOStorageServiceImpl implements StorageService {
     /**
      * MinIO client.
      */
+    @Getter
     private final MinioClient client;
 
     /**
      * MinIO bucket.
      */
     private final String bucket;
-
-    /**
-     * Returns client.
-     *
-     * @return client
-     */
-    public MinioClient getClient() {
-        return client;
-    }
 
     /**
      * Creates an object.

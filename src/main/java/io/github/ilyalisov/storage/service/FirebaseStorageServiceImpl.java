@@ -9,6 +9,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.StorageClient;
 import io.github.ilyalisov.storage.config.StorageFile;
+import lombok.Getter;
 import lombok.SneakyThrows;
 
 import java.io.ByteArrayInputStream;
@@ -26,16 +27,8 @@ public class FirebaseStorageServiceImpl implements StorageService {
     /**
      * Firebase Bucket.
      */
+    @Getter
     private final Bucket bucket;
-
-    /**
-     * Returns bucket.
-     *
-     * @return bucket
-     */
-    public Bucket getBucket() {
-        return bucket;
-    }
 
     /**
      * Creates an object.

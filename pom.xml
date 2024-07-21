@@ -49,6 +49,8 @@
         <google-cloud.version>2.31.0</google-cloud.version>
         <minio.version>8.5.2</minio.version>
         <testcontainers.version>1.19.3</testcontainers.version>
+        <s3.version>2.26.21</s3.version>
+        <mockito.version>5.12.0</mockito.version>
     </properties>
     <dependencies>
         <dependency>
@@ -73,6 +75,11 @@
             <version>${minio.version}</version>
         </dependency>
         <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>s3</artifactId>
+            <version>${s3.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>${junit.version}</version>
@@ -88,6 +95,12 @@
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

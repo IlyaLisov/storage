@@ -21,14 +21,14 @@ public class Page {
     /**
      * Creates an object.
      *
-     * @param page     page number
+     * @param page     page number from 1
      * @param pageSize size of page
      */
     public Page(
             final int page,
             final int pageSize
     ) {
-        if (page < 0 || pageSize < 0) {
+        if (page <= 0 || pageSize < 0) {
             throw new IllegalArgumentException(
                     "Page and page size must be positive number."
             );
