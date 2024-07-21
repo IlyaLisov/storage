@@ -1,5 +1,6 @@
 package io.github.ilyalisov.storage.service;
 
+import io.github.ilyalisov.storage.config.Page;
 import io.github.ilyalisov.storage.config.StorageFile;
 import lombok.SneakyThrows;
 import org.apache.http.entity.ContentType;
@@ -227,7 +228,7 @@ public class MinIOStorageServiceImplTests {
             storageService.save(file2);
             List<StorageFile> files = storageService.findAll(
                     path,
-                    new io.github.ilyalisov.storage.config.Page(
+                    new Page(
                             1,
                             10
                     ));
@@ -241,7 +242,7 @@ public class MinIOStorageServiceImplTests {
         Path path = Path.of("folder", UUID.randomUUID().toString());
         List<StorageFile> files = storageService.findAll(
                 path,
-                new io.github.ilyalisov.storage.config.Page(
+                new Page(
                         1,
                         10
                 )
