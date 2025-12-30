@@ -2,8 +2,8 @@
 
 [![mvn](https://github.com/ilyalisov/storage/actions/workflows/maven-build.yml/badge.svg)](https://github.com/ilyalisov/storage/actions/workflows/maven-build.yml)
 [![codecov](https://codecov.io/gh/IlyaLisov/storage/graph/badge.svg?token=OJR6TFQ2qr)](https://codecov.io/gh/IlyaLisov/storage)
-[![Hits-of-Code](https://hitsofcode.com/github/ilyalisov/storage?branch=master)](https://hitsofcode.com/github/ilyalisov/storage/view?branch=master)
-[![Lines-of-Code](https://tokei.rs/b1/github/ilyalisov/storage)](https://github.com/ilyalisov/storage)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+![Maven Central](https://img.shields.io/maven-central/v/io.github.ilyalisov/storage)
 
 A comprehensive Java storage library for fast and convenient storing and accessing data in your Java applications. Currently supports MinIO and Firebase storage services with a unified API.
 
@@ -11,7 +11,9 @@ A comprehensive Java storage library for fast and convenient storing and accessi
 
 - [Features](#features)
 - [Quick Start](#quick-start)
-  - [Installation](#installation)
+- [Installation](#installation)
+  * [Maven](#maven)
+  * [Gradle](#gradle)
 - [Core Components](#core-components)
   - [Storage Service Interface](#storage-service-interface)
   - [Storage File](#storage-file)
@@ -42,9 +44,9 @@ A comprehensive Java storage library for fast and convenient storing and accessi
 
 Get your file storage operations up and running quickly with a unified API that works across multiple storage providers.
 
-### Installation
+## Installation
 
-**Maven:**
+### Maven
 
 Add to your `pom.xml`:
 
@@ -56,11 +58,11 @@ Add to your `pom.xml`:
 </dependency>
 ```
 
-**Gradle:**
+### Gradle
 
 Add to your `build.gradle` or `build.gradle.kts`:
 
-```kotlin
+```groovy
 implementation("io.github.ilyalisov:storage:0.1.0")
 ```
 
@@ -248,12 +250,14 @@ public class Main {
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE)
+file for details.
 
 ## Contributing
 
-We welcome contributions! Please feel free to submit issues and enhancement requests.
+We welcome contributions! Please feel free to submit issues and enhancement
+requests.
 
 To contribute, make a fork and open a pull request. You can find issues [here](https://github.com/ilyalisov/storage/issues).
 
-Make sure you follow the project's code style.
+Make sure you follow the project's codestyle.
